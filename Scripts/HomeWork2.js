@@ -1,10 +1,3 @@
-/*
-Task 1
-
-Write a function
-function solution1(A);
-that given an array A returns a minimal positive integer not present in the array.
-*/
 function solution1(A){
 
 	var result = false;
@@ -34,50 +27,39 @@ function solution1(A){
 	return result;
 }
 
-
-
-/*
-Task 2
-
-Write a function
-function solution2(S);
-
-that given a string S returns a boolean indicating if the string is bracket balanced
-*/
-
 function solution2(S){
 
 	var balancerStack = [];
 	var ArrayS = S.split("");
 	var result = true;
 	
-	ArrayS.forEach(function(element1,index1,array1){     
-		if ((element1 === "[") || (element1 === "{") || (element1 === "(") ){
-			balancerStack.push(element1)
+	for (i = 0; i < ArrayS.length; i++) { 
+		if ((ArrayS[i] === "[") || (ArrayS[i] === "{") || (ArrayS[i] === "(") ){
+			balancerStack.push(ArrayS[i])
 		};
 
-		if (element1 === "]"){
+		if (ArrayS[i] === "]"){
 			if (!(balancerStack.pop() === "[")){				
 				result = false;
-				return false;
+				break;
 			}	
 		}
 		
-		if (element1 === "}"){
+		if (ArrayS[i] === "}"){
 			if (!(balancerStack.pop() === "{")){				
 				result = false;
-				return false;
+				break;
 			}
 		}
 		
-		if (element1 === ")"){
+		if (ArrayS[i] === ")"){
 			if (!(balancerStack.pop() === "(")){				
 				result = false;
-				return false;
+				break;
 			}
 		}
-	})
-	
+	}
+		
 	if (balancerStack.length > 0){
 		result = false;
 	}
@@ -85,3 +67,15 @@ function solution2(S){
 	return result;
 }
 
+function solution3(A, F){
+
+	regexpForArg = /(\(?)(\w*)(\)?)(?=\=>)/;
+	regexpForBody = /(\=>)(.+$)/;
+
+	functionArg = regexpForArg.exec(F);
+	functionBody = regexpForBody.exec(F);
+
+	var f1 = new Function(functionArg[2],"return " + functionBody[2]);		
+	
+	return A.map(f1);
+}
